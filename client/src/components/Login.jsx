@@ -1,7 +1,16 @@
 import React from "react";
 import { CiGlobe } from "react-icons/ci";
 import { FaAngleDown } from "react-icons/fa";
+import ReCAPTCHA from "react-google-recaptcha";
+
 const Login = () => {
+
+  const clientSiteKey = import.meta.env.VITE_CAPTCHA_CLIENT_SITE_KEY;
+
+  function onChange(value) {
+    console.log("Captcha value:", value);
+  }
+
   return (
     <div>
       <div className="flex h-screen">
@@ -74,10 +83,30 @@ const Login = () => {
                   id="email-input"
                   type="email"
                   placeholder="Enter your email"
+                  className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 mb-2 focus:outline-indigo-600"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="password-input"
+                  className="mb-1 inline-block text-sm font-medium"
+                >
+                  Password<span className="text-red-600">*</span>
+                </label>
+                <input
+                  id="password-input"
+                  type="password"
+                  placeholder="Enter your password"
                   className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-indigo-600"
                   required
                 />
               </div>
+              <ReCAPTCHA
+                sitekey={clientSiteKey}
+                onChange={onChange}
+                className="flex justify-center mt-5"
+              />
               <button
                 type="submit"
                 className="mb-1.5 w-full rounded  px-4 py-2 text-center font-medium text-black shadow-[0_0_1px_1px_rgba(0,0,0,0.3)]  mt-5"
