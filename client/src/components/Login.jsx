@@ -1,17 +1,37 @@
-import React, { useState } from "react";
-import { CiGlobe } from "react-icons/ci";
-import { FaAngleDown } from "react-icons/fa";
-import ReCAPTCHA from "react-google-recaptcha";
+import React, { useState } from 'react';
+import { CiGlobe } from 'react-icons/ci';
+import { FaAngleDown } from 'react-icons/fa';
+import ReCAPTCHA from 'react-google-recaptcha';
+import axios from 'axios';
 
 const Login = () => {
-
-  const [recaptchValue, setRecaptchValue] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [recaptchValue, setRecaptchValue] = useState('');
+  const [message, setMessage] = useState('');
 
   const clientSiteKey = import.meta.env.VITE_CAPTCHA_CLIENT_SITE_KEY;
+  const backendUrl = import.meta.env.BACKEND_URL;
 
-  function onChange(value) {
-    setRecaptchValue(value);
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!recaptchValue) {
+      setMessage('Please complete the reCAPTCHA');
+      return;
+    }
+
+    try {
+      const response = await axios.post(`http://localhost:5000/api/user/signup`, {
+        email,
+        password,
+        recaptchValue
+      });
+      setMessage(response.data.message);
+    } catch (error) {
+      setMessage(error.response.data.error);
+    }
+  };
 
   return (
     <div>
@@ -87,7 +107,7 @@ const Login = () => {
               <span className="mx-4 text-gray-500">OR</span>
               <div className="flex-grow border-t border-gray-300 w-40"></div>
             </div>
-            <form onSubmit={() => {}} className="w-[50%]">
+            <form onSubmit={handleSubmit} className="w-[50%]">
               <div>
                 <label
                   htmlFor="email-input"
@@ -99,6 +119,8 @@ const Login = () => {
                   id="email-input"
                   type="email"
                   placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 mb-2 focus:outline-indigo-600"
                   required
                 />
@@ -114,22 +136,25 @@ const Login = () => {
                   id="password-input"
                   type="password"
                   placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-indigo-600"
                   required
                 />
               </div>
               <ReCAPTCHA
                 sitekey={clientSiteKey}
-                onChange={onChange}
+                onChange={(token) => setRecaptchValue(token)}
                 className="flex justify-center mt-5"
               />
               <button
                 type="submit"
                 className="mb-1.5 w-full rounded  px-4 py-2 text-center font-medium text-black shadow-[0_0_1px_1px_rgba(0,0,0,0.3)]  mt-5"
               >
-                Sign in with Email
+                Sign up with Email
               </button>
             </form>
+            {message && <p className="mt-3 text-red-600">{message}</p>}
           </div>
         </div>
         <div className="w-[50vw] bg-[#172741]"></div>

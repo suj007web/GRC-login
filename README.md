@@ -1,8 +1,9 @@
 # GRC Login Form
 
-## Tech Stack:
-MERN
+## Technology Stack:
+
+Tech - React, TailwindCSS, Express, MongoDb
 
 OAuth - Google, Github, Okta, OneLogin
 
-Captcha - Altcha
+Captcha - reCaptcha v2

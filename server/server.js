@@ -2,6 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
+import userRouter from './routes/userRoute.js'
 
 dotenv.config({
   path: './.env'
@@ -13,6 +15,9 @@ const PORT = process.env.PORT || 8000
 server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
 server.use(cors())
+server.use(bodyParser.json());
+
+server.use('/api/user', userRouter)
 
 server.get('/', (req, res) => {
   res.send('Serving Running!')
