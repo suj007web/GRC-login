@@ -3,7 +3,7 @@ import { CiGlobe } from 'react-icons/ci';
 import { FaAngleDown } from 'react-icons/fa';
 import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
-
+import { SiOkta } from "react-icons/si";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -93,14 +93,13 @@ const Login = () => {
                 className="text-white bg-green-800 hover:bg-green-800/90  font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
               
-                Sign in with Okta
+              <SiOkta className='me-2'/>  Sign in with Okta
               </button>
               <button
                 type="button"
                 className="text-white bg-slate-600 hover:bg-slate-600/90  font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
-               
-                Sign in with OneLogin
+              <img src="../../public/onelogin-1.svg" className='me-2 h-5' alt="" /> Sign in with OneLogin
               </button>
             </div>
             <div className="flex items-center justify-center">
