@@ -4,6 +4,7 @@ import { FaAngleDown } from 'react-icons/fa';
 import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
 
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,8 +36,8 @@ const Login = () => {
 
   return (
     <div>
-      <div className="flex h-screen">
-        <div className="w-[50vw] ">
+      <div className="flex-col md:flex md:flex-row h-screen ">
+        <div className="w-[100vw] md:w-[50vw] ">
           <div className="w-full shadow-md h-10 flex justify-end p-2">
             <h1 className="flex place-items-center gap-1 px-2">
               Region <CiGlobe /> <FaAngleDown />
@@ -45,13 +46,13 @@ const Login = () => {
               India
             </button>
           </div>
-          <div className="flex flex-col justify-center w-full place-items-center h-[80vh] gap-8">
-            <h1>Company Name</h1>
+          <div className="flex flex-col justify-center w-full place-items-center h-[90vh] gap-1">
+            <h1>GRC Login</h1>
             <h1 className="text-2xl font-semibold">Log into your account</h1>
             <div className="flex flex-col">
               <button
                 type="button"
-                className="text-white bg-[#24292F] hover:bg-[#474646] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  me-2 mb-2 "
+                className="text-white bg-[#24292F] hover:bg-[#474646] font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center  me-2 mb-1 "
               >
                 <svg
                   className="w-4 h-4 me-2"
@@ -70,7 +71,7 @@ const Login = () => {
               </button>
               <button
                 type="button"
-                className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+                className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90  font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
                 <svg
                   className="w-4 h-4 me-2"
@@ -89,14 +90,14 @@ const Login = () => {
               </button>
               <button
                 type="button"
-                className="text-white bg-green-800 hover:bg-green-800/90  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+                className="text-white bg-green-800 hover:bg-green-800/90  font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
               
                 Sign in with Okta
               </button>
               <button
                 type="button"
-                className="text-white bg-slate-600 hover:bg-slate-600/90  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+                className="text-white bg-slate-600 hover:bg-slate-600/90  font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
                
                 Sign in with OneLogin
@@ -111,7 +112,7 @@ const Login = () => {
               <div>
                 <label
                   htmlFor="email-input"
-                  className="mb-1 inline-block text-sm font-medium"
+                  className="inline-block text-sm font-medium"
                 >
                   Email<span className="text-red-600">*</span>
                 </label>
@@ -121,14 +122,14 @@ const Login = () => {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 mb-2 focus:outline-indigo-600"
+                  className="w-full rounded border-[1px] border-slate-300 py-1 px-2.5 focus:outline-indigo-600"
                   required
                 />
               </div>
               <div>
                 <label
                   htmlFor="password-input"
-                  className="mb-1 inline-block text-sm font-medium"
+                  className=" inline-block text-sm font-medium"
                 >
                   Password<span className="text-red-600">*</span>
                 </label>
@@ -138,14 +139,14 @@ const Login = () => {
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-indigo-600"
+                  className="w-full rounded border-[1px] border-slate-300 py-1 px-2.5 focus:outline-indigo-600"
                   required
                 />
               </div>
               <ReCAPTCHA
                 sitekey={clientSiteKey}
                 onChange={(token) => setRecaptchValue(token)}
-                className="flex justify-center mt-5"
+                className="flex justify-center mt-3"
               />
               <button
                 type="submit"
@@ -157,7 +158,13 @@ const Login = () => {
             {message && <p className="mt-3 text-red-600">{message}</p>}
           </div>
         </div>
-        <div className="w-[50vw] bg-[#172741]"></div>
+        <div className="md:w-[50vw] bg-[#172741] text-white">
+          <div className='flex flex-col gap-7 justify-center place-items-center'>
+          <h1 className='text-5xl font-bold mt-8'>Welcome !</h1>
+          <p className='text-md'>Stay aware, stay ahead, stay compliant</p>
+          </div>
+          <img src="../../public/login.png" alt="" className='h-80 m-auto' />
+        </div>
       </div>
     </div>
   );
