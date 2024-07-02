@@ -4,12 +4,16 @@ import { FaAngleDown } from 'react-icons/fa';
 import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
 import { SiOkta } from "react-icons/si";
+import { useNavigate } from 'react-router-dom';
+import StackedNotifications from './StackedNotifications';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [recaptchValue, setRecaptchValue] = useState('');
-  const [message, setMessage] = useState('');
+  const [notification, setNotification] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const clientSiteKey = import.meta.env.VITE_CAPTCHA_CLIENT_SITE_KEY;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -18,26 +22,40 @@ const Login = () => {
     e.preventDefault();
 
     if (!recaptchValue) {
-      setMessage('Please complete the reCAPTCHA');
+      setNotification({ id: Math.random(), text: 'Please complete the reCAPTCHA' });
       return;
     }
 
+    setIsLoading(true);
+
     try {
-      const response = await axios.post(`${backendUrl}/api/user/signup/`, {
+      const response = await axios.post(`${backendUrl}/api/user/signup`, {
         email,
         password,
         recaptchValue
       });
-      setMessage(response.data.message);
+      setNotification({ id: Math.random(), text: response.data.message });
+
+      setTimeout(() => {
+        if (response.data.success) {
+          navigate('/dashboard');
+        }
+        setIsLoading(false);
+      }, 3000);
     } catch (error) {
-      setMessage(error.response.data.error);
+      setNotification({ id: Math.random(), text: error.response.data.error });
+      setIsLoading(false); 
     }
+  };
+
+  const removeNotif = () => {
+    setNotification(null);
   };
 
   return (
     <div>
-      <div className="flex-col md:flex md:flex-row h-screen ">
-        <div className="w-[100vw] md:w-[50vw] ">
+      <div className="flex-col md:flex md:flex-row h-screen">
+        <div className="w-[100vw] md:w-[50vw]">
           <div className="w-full shadow-md h-10 flex justify-end p-2">
             <h1 className="flex place-items-center gap-1 px-2">
               Region <CiGlobe /> <FaAngleDown />
@@ -52,7 +70,7 @@ const Login = () => {
             <div className="flex flex-col">
               <button
                 type="button"
-                className="text-white bg-[#24292F] hover:bg-[#474646] font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center  me-2 mb-1 "
+                className="text-white bg-[#24292F] hover:bg-[#474646] font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
                 <svg
                   className="w-4 h-4 me-2"
@@ -71,7 +89,7 @@ const Login = () => {
               </button>
               <button
                 type="button"
-                className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90  font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
+                className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
                 <svg
                   className="w-4 h-4 me-2"
@@ -90,14 +108,13 @@ const Login = () => {
               </button>
               <button
                 type="button"
-                className="text-white bg-green-800 hover:bg-green-800/90  font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
+                className="text-white bg-green-800 hover:bg-green-800/90 font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
-
-                <SiOkta className='me-2' />  Sign in with Okta
+                <SiOkta className='me-2' /> Sign in with Okta
               </button>
               <button
                 type="button"
-                className="text-white bg-slate-600 hover:bg-slate-600/90  font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
+                className="text-white bg-slate-600 hover:bg-slate-600/90 font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
                 <img src="../../public/onelogin-1.svg" className='me-2 h-5' alt="" /> Sign in with OneLogin
               </button>
@@ -149,12 +166,22 @@ const Login = () => {
               />
               <button
                 type="submit"
-                className="mb-1.5 w-full rounded  px-4 py-2 text-center font-medium text-black shadow-[0_0_1px_1px_rgba(0,0,0,0.3)]  mt-5"
+                className="mb-1.5 w-full rounded px-4 py-2 text-center font-medium text-black shadow-[0_0_1px_1px_rgba(0,0,0,0.3)] mt-5 relative"
               >
+                {isLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray-900"></div>
+                  </div>
+                )}
                 Sign up with Email
               </button>
             </form>
-            {message && <p className="mt-3 text-red-600">{message}</p>}
+            {notification && (
+              <StackedNotifications
+                removeNotif={() => setNotification(null)}
+                notification={notification}
+              />
+            )}
           </div>
         </div>
         <div className="md:w-[50vw] bg-[#172741] text-white">

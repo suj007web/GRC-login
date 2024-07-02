@@ -2,13 +2,15 @@ import User from '../models/userModel.js'
 import bcrypt from 'bcrypt'
 import axios from 'axios'
 
-const secretKey = process.env.CAPTCHA_SERVER_SITE_KEY
+// const secretKey = process.env.CAPTCHA_SERVER_SITE_KEY;
+const secretKey = "6Le9DQEqAAAAAJfvvgKU0ZAhAkqOU0f6y9rfJb97";
 
 export const signup = async (req, res) => {
   const { email, password, recaptchValue } = req.body
   try {
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchValue}`
     const response = await axios.post(verifyUrl)
+    console.log(verifyUrl);
     if (!response.data.success) {
       return res.status(400).json({ error: 'Failed reCAPTCHA verification' })
     }
@@ -17,9 +19,9 @@ export const signup = async (req, res) => {
 
     const newUser = new User({ email, password: hashedPassword })
     await newUser.save()
-    res.status(201).json({ message: 'User registered successfully' })
+    res.status(201).json({ success: true, message: 'User registered successfully' })
   } catch (err) {
-    res.status(500).json({ error: 'Error creating user' })
+    res.status(500).json({ success: false, error: 'Error creating user' })
   }
 }
 

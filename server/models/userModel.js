@@ -15,10 +15,12 @@ const userSchema = mongoose.Schema(
   },
   {
     timestamps: true
+  },
+  {
+    collection: 'users'
   }
 )
 
 const User = mongoose.model('User', userSchema)
 
-export default User;
-
+export default User
