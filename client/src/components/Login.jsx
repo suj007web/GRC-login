@@ -12,7 +12,7 @@ const Login = () => {
   const [message, setMessage] = useState('');
 
   const clientSiteKey = import.meta.env.VITE_CAPTCHA_CLIENT_SITE_KEY;
-  const backendUrl = import.meta.env.BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post(`http://localhost:5000/api/user/signup`, {
+      const response = await axios.post(`${backendUrl}/api/user/signup/`, {
         email,
         password,
         recaptchValue
@@ -92,14 +92,14 @@ const Login = () => {
                 type="button"
                 className="text-white bg-green-800 hover:bg-green-800/90  font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
-              
-              <SiOkta className='me-2'/>  Sign in with Okta
+
+                <SiOkta className='me-2' />  Sign in with Okta
               </button>
               <button
                 type="button"
                 className="text-white bg-slate-600 hover:bg-slate-600/90  font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
-              <img src="../../public/onelogin-1.svg" className='me-2 h-5' alt="" /> Sign in with OneLogin
+                <img src="../../public/onelogin-1.svg" className='me-2 h-5' alt="" /> Sign in with OneLogin
               </button>
             </div>
             <div className="flex items-center justify-center">
@@ -158,11 +158,11 @@ const Login = () => {
           </div>
         </div>
         <div className="md:w-[50vw] bg-[#172741] text-white">
-          <div className='flex flex-col gap-7 justify-center place-items-center'>
-          <h1 className='text-5xl font-bold mt-8'>Welcome !</h1>
-          <p className='text-md'>Stay aware, stay ahead, stay compliant</p>
+          <div className='flex flex-col gap-7 justify-center items-center h-screen'>
+            <h1 className='text-5xl font-bold mt-8'>Welcome !</h1>
+            <p className='text-md'>Stay aware, stay ahead, stay compliant</p>
+            <img src="../../public/login.png" alt="" className='h-80 mx-auto' />
           </div>
-          <img src="../../public/login.png" alt="" className='h-80 m-auto' />
         </div>
       </div>
     </div>

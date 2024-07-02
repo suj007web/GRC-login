@@ -6,7 +6,6 @@ const secretKey = process.env.CAPTCHA_SERVER_SITE_KEY
 
 export const signup = async (req, res) => {
   const { email, password, recaptchValue } = req.body
-
   try {
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchValue}`
     const response = await axios.post(verifyUrl)
