@@ -2,7 +2,7 @@ import React from 'react'
 
 function Dashboard() {
   return (
-    <div className='text-7xl underline text-center'>Dashboard</div>
+    <div className='text-4xl underline text-center'>Dashboard</div>
   )
 }
 

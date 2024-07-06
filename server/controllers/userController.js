@@ -10,7 +10,7 @@ export const signup = async (req, res) => {
   try {
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchValue}`
     const response = await axios.post(verifyUrl)
-    console.log(verifyUrl);
+    // console.log(verifyUrl);
     if (!response.data.success) {
       return res.status(400).json({ error: 'Failed reCAPTCHA verification' })
     }
