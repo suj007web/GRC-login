@@ -3,6 +3,8 @@ import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useNavigate } from 'react-router-dom';
 import StackedNotifications from './StackedNotifications';
+import { CiGlobe } from 'react-icons/ci';
+import { FaAngleDown } from 'react-icons/fa';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -50,7 +52,7 @@ const Signup = () => {
       <div className="w-[100vw] md:w-[50vw]">
         <div className="w-full shadow-md h-10 flex justify-end p-2">
           <h1 className="flex place-items-center gap-1 px-2">
-            Region
+            Region <CiGlobe /> <FaAngleDown />
           </h1>
           <button className="rounded-full bg-slate-200 py-1 px-4 flex place-items-center">
             India

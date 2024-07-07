@@ -29,7 +29,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${backendUrl}/api/user/signup`, {
+      const response = await axios.post(`${backendUrl}/api/user/signin`, {
         email,
         password,
         recaptchValue
