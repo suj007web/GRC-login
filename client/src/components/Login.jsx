@@ -54,7 +54,7 @@ const Login = () => {
 
   return (
     <div>
-      <div className="flex-col md:flex md:flex-row h-screen">
+      <div className="flex-col md:flex md:flex-row h-[90vh]">
         <div className="w-[100vw] md:w-[50vw]">
           <div className="w-full shadow-md h-10 flex justify-end p-2">
             <h1 className="flex place-items-center gap-1 px-2">
@@ -68,7 +68,7 @@ const Login = () => {
             <h1>GRC Login</h1>
             <h1 className="text-2xl font-semibold">Log into your account</h1>
             <div className="flex flex-col">
-              <button
+              {/* <button
                 type="button"
                 className="text-white bg-[#24292F] hover:bg-[#474646] font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
@@ -86,10 +86,10 @@ const Login = () => {
                   />
                 </svg>
                 Sign in with Github
-              </button>
+              </button> */}
               <button
                 type="button"
-                className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
+                className="text-[#4285F4] hover:text-white my-5 py-3 bg-white border-2 border-[#4285F4] hover:bg-[#4285F4]/90 font-medium rounded-lg text-sm px-10 text-center inline-flex items-center me-2"
               >
                 <svg
                   className="w-4 h-4 me-2"
@@ -106,7 +106,7 @@ const Login = () => {
                 </svg>
                 Sign in with Google
               </button>
-              <button
+              {/* <button
                 type="button"
                 className="text-white bg-green-800 hover:bg-green-800/90 font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
@@ -117,7 +117,7 @@ const Login = () => {
                 className="text-white bg-slate-600 hover:bg-slate-600/90 font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center me-2 mb-1"
               >
                 <img src="../../public/onelogin-1.svg" className='me-2 h-5' alt="" /> Sign in with OneLogin
-              </button>
+              </button> */}
             </div>
             <div className="flex items-center justify-center">
               <div className="flex-grow border-t border-gray-300 w-40"></div>
@@ -173,7 +173,7 @@ const Login = () => {
                     <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray-900"></div>
                   </div>
                 )}
-                Sign up with Email
+                Login with Email
               </button>
             </form>
             {notification && (
@@ -186,7 +186,7 @@ const Login = () => {
         </div>
         <div className="md:w-[50vw] bg-[#172741] text-white">
           <div className='flex flex-col gap-7 justify-center items-center h-screen'>
-            <h1 className='text-5xl font-bold mt-8'>Welcome !</h1>
+            <h1 className='text-5xl font-bold mt-8'>Welcome!</h1>
             <p className='text-md'>Stay aware, stay ahead, stay compliant</p>
             <img src="../../public/login.png" alt="" className='h-80 mx-auto' />
           </div>
