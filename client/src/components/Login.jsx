@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CiGlobe } from 'react-icons/ci';
 import { FaAngleDown } from 'react-icons/fa';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import StackedNotifications from './StackedNotifications';
 import { useUser } from '../context/AuthContext';
 import { useGoogleLogin } from '@react-oauth/google';
+// import pgaoth20 from "passport-google-oauth20"
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,17 +16,24 @@ const Login = () => {
   const [recaptchValue, setRecaptchValue] = useState('');
   const [notification, setNotification] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const {setCurrentUser} = useUser()
+  const { setCurrentUser } = useUser()
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  // const GoogleStrategy = pgaoth20.Strategy
 
   const clientSiteKey = import.meta.env.VITE_CAPTCHA_CLIENT_SITE_KEY;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const handlePassportLogin = () => {
+    window.open(`${backendUrl}/api/user/google`, '_self');
+  };
 
   const login = useGoogleLogin({
     onSuccess: tokenResponse => console.log(tokenResponse),
     // navigate('/dashboard'); 
     onError: err => console.log(err),
-  }); 
+  });
 
   // const login = useGoogleLogin({
   //   onSuccess: async (tokenResponse) => {
@@ -86,7 +94,7 @@ const Login = () => {
       }, 3000);
     } catch (error) {
       setNotification({ id: Math.random(), text: error.response.data.error });
-      setIsLoading(false); 
+      setIsLoading(false);
     }
 
   };
@@ -94,6 +102,20 @@ const Login = () => {
   const removeNotif = () => {
     setNotification(null);
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await axios.get(`${backendUrl}/api/user/getMe`, { withCredentials: true });
+        console.log(res.data.email);
+        setUser(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUser();
+  }, []);
 
   return (
     <div>
@@ -148,7 +170,27 @@ const Login = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                Sign in with Google
+                Sign in with Google OAuth
+              </button>
+              <button
+                type="button"
+                className="text-[#4285F4] hover:text-white my-5 py-3 bg-white border-2 border-[#4285F4] hover:bg-[#4285F4]/90 font-medium rounded-lg text-sm px-10 text-center inline-flex items-center me-2"
+                onClick={handlePassportLogin}
+              >
+                <svg
+                  className="w-4 h-4 me-2"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 18 19"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Sign in with Google Passport
               </button>
               {/* <button
                 type="button"

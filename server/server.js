@@ -4,6 +4,9 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import userRouter from './routes/userRoute.js'
+import session from 'express-session';
+import passport from 'passport';
+import './middlewares/passport.js'
 
 dotenv.config({
   path: './.env'
@@ -12,10 +15,17 @@ dotenv.config({
 const server = express()
 const PORT = process.env.PORT || 8000
 
+server.use(session({ secret: 'Ishaan', resave: false, saveUninitialized: true }));
 server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
-server.use(cors())
+server.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
+
 server.use(bodyParser.json());
+server.use(passport.initialize());
+server.use(passport.session());
 
 server.use('/api/user', userRouter)
 

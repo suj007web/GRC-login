@@ -55,12 +55,13 @@ export const signin = async (req, res) => {
 }
 
 export const googleVerify = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.user;
   try {
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ success: false, error: 'User not found. Please sign up first.' });
     }
+    console.log(user);
     res.status(200).json({ success: true, user: user });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Failed to verify Google login token' });
