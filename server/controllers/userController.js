@@ -3,8 +3,7 @@ import bcrypt from 'bcrypt'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
 
-// const secretKey = process.env.CAPTCHA_SERVER_SITE_KEY;
-const secretKey = '6Le9DQEqAAAAAJfvvgKU0ZAhAkqOU0f6y9rfJb97'
+const secretKey = process.env.CAPTCHA_SERVER_SITE_KEY;
 
 export const signup = async (req, res) => {
   const { email, password, recaptchValue } = req.body

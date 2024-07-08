@@ -1,11 +1,8 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
-const googleClientId = "355222082176-ghjoad99u3vg8u71ivkb8ufm2h35rn6l.apps.googleusercontent.com"
-// const googleClientId =process.env.GOAUTH_PASSPORT_CLIENT_ID
-const googleClientSecret = "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"
-// const googleClientSecret = process.env.GOAUTH_PASSPORT_CLIENT_SECRET
-
+const googleClientId =process.env.GOAUTH_PASSPORT_CLIENT_ID
+const googleClientSecret = process.env.GOAUTH_PASSPORT_CLIENT_SECRET
 
 passport.serializeUser((user, done) => {
     done(null, user);
