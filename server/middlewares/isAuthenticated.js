@@ -1,11 +1,13 @@
 import jwt from 'jsonwebtoken';
 
 export const isAuthenticated = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
+  const authHeader = req.headers.authorization;
 
-  if (!token) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'Authentication token is missing' });
   }
+
+  const token = authHeader.split(' ')[1];
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);

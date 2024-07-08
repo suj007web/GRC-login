@@ -7,6 +7,7 @@ import { SiOkta } from "react-icons/si";
 import { useNavigate } from 'react-router-dom';
 import StackedNotifications from './StackedNotifications';
 import { useUser } from '../context/AuthContext';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -19,6 +20,41 @@ const Login = () => {
 
   const clientSiteKey = import.meta.env.VITE_CAPTCHA_CLIENT_SITE_KEY;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const login = useGoogleLogin({
+    onSuccess: tokenResponse => console.log(tokenResponse),
+    // navigate('/dashboard'); 
+    onError: err => console.log(err),
+  }); 
+
+  // const login = useGoogleLogin({
+  //   onSuccess: async (tokenResponse) => {
+  //     try {
+  //       const googleToken = tokenResponse.access_token;
+  //       const response = await axios.post(`${backendUrl}/api/user/googleVerify`, {
+  //         token: googleToken,
+  //         email: tokenResponse.profileObj.email
+  //       });
+  //       const { success, user } = response.data;
+  //       if (success) {
+  //         setCurrentUser(user);
+  //         console.log(setCurrentUser , user);
+  //         navigate('/dashboard'); 
+  //       } else {
+  //         console.error('Google login error:', response.data.error);
+  //         setNotification({ id: Math.random(), text: 'Google login failed' });
+  //       }
+  //     } catch (error) {
+  //       console.error('Google login error:', error);
+  //       setNotification({ id: Math.random(), text: 'Google login failed' });
+  //     }
+  //   },
+  //   onFail: (error) => {
+  //     console.error('Google login error:', error);
+  //     setNotification({ id: Math.random(), text: 'Google login failed' });
+  //   },
+  // });
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +74,8 @@ const Login = () => {
       });
       setNotification({ id: Math.random(), text: response.data.message });
       const user = response.data.user
+      // const token = response.data.token;
+      // localStorage.setItem('token', token);
       setCurrentUser(user)
 
       setTimeout(() => {
@@ -95,6 +133,7 @@ const Login = () => {
               <button
                 type="button"
                 className="text-[#4285F4] hover:text-white my-5 py-3 bg-white border-2 border-[#4285F4] hover:bg-[#4285F4]/90 font-medium rounded-lg text-sm px-10 text-center inline-flex items-center me-2"
+                onClick={() => login()}
               >
                 <svg
                   className="w-4 h-4 me-2"
