@@ -48,7 +48,7 @@ export const signin = async (req, res) => {
     // console.log("token: " + token)
     res
       .status(200)
-      .json({ token: token, success: true, message: 'User signed in successfully' })
+      .json({ user: user, token: token, success: true, message: 'User signed in successfully' })
   } catch (error) {
     res.status(500).json({ error: 'Error signing in user' })
   }

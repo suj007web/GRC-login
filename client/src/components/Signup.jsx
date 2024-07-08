@@ -37,7 +37,7 @@ const Signup = () => {
 
       setTimeout(() => {
         if (response.data.success) {
-          navigate('/dashboard');
+          window.location.reload();
         }
         setIsLoading(false);
       }, 3000);

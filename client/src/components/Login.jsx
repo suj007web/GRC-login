@@ -6,6 +6,7 @@ import axios from 'axios';
 import { SiOkta } from "react-icons/si";
 import { useNavigate } from 'react-router-dom';
 import StackedNotifications from './StackedNotifications';
+import { useUser } from '../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,6 +14,7 @@ const Login = () => {
   const [recaptchValue, setRecaptchValue] = useState('');
   const [notification, setNotification] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const {setCurrentUser} = useUser()
   const navigate = useNavigate();
 
   const clientSiteKey = import.meta.env.VITE_CAPTCHA_CLIENT_SITE_KEY;
@@ -35,6 +37,8 @@ const Login = () => {
         recaptchValue
       });
       setNotification({ id: Math.random(), text: response.data.message });
+      const user = response.data.user
+      setCurrentUser(user)
 
       setTimeout(() => {
         if (response.data.success) {
@@ -46,6 +50,7 @@ const Login = () => {
       setNotification({ id: Math.random(), text: error.response.data.error });
       setIsLoading(false); 
     }
+
   };
 
   const removeNotif = () => {
